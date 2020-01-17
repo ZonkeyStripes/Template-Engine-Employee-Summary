@@ -21,10 +21,10 @@ inquirer
         type: "list",
         name: "role",
         message: "Title of their role?",
-        choices: ["Employee", "Intern", "Engineer", "Manager"]
+        choices: ["Intern", "Engineer", "Manager"]
       },
   ])
   .then(answers => {
       
-    // Use user feedback for... whatever!!
-  });
+
+});
