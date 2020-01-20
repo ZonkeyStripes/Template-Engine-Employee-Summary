@@ -82,7 +82,6 @@ function ask() {
         if (answers.role === "Manager") {
             inquirer.prompt(managerQuestion).then(answer => {
                 let newManager = new Manager(answers.name, answers.id, answers.email, answer.officeNumber)
-                // something.officeNum = answers.officeNum;
                 empObj.Manager.push(newManager)
                 console.log("Thanks!")
                 console.log(empObj)
@@ -91,7 +90,6 @@ function ask() {
         } else if (answers.role === "Engineer") {
             inquirer.prompt(enginQuestion).then(answer => {
                 let newEngineer = new Engineer(answers.name, answers.id, answers.email, answer.gitName)
-                // something.github = answers.github;
                 empObj.Engineer.push(newEngineer)
                 console.log("Thanks!")
                 console.log(empObj)
@@ -100,7 +98,6 @@ function ask() {
         } else if (answers.role === "Intern") {
             inquirer.prompt(internQuestion).then(answer => {
                 let newIntern = new Intern(answers.name, answers.id, answers.email, answer.school)
-                // something.school = answers.school;
                 empObj.Intern.push(newIntern)
                 console.log("Thanks!")
                 console.log(empObj)
@@ -121,18 +118,16 @@ function moreAsk() {
 }
 
 function makeHtml(){
-    
     let page = generate.mainBody();
     
     while(empObj.Manager.length != 0){
         let x = empObj.Manager.pop();
         page += generate.managerCard(x);
-        console.log(x.name, x.id, x.email, x.officeNumber, x.role)
     }
     while(empObj.Engineer.length !=0){
         page += generate.enginCard(empObj.Engineer.pop())
     }
-    while(empObj.Intern.pop.length != 0){
+    while(empObj.Intern.length != 0){
         page += generate.internCard(empObj.Intern.pop())
     }
     page += generate.foot();
