@@ -1,12 +1,14 @@
 const inquirer = require('inquirer');
 
 const fs = require("fs")
-const employee = require("./lib/employee")
-const engineer = require("./lib/engineer")
-const manager = require("./lib/manager")
-const intern = require("./lib/intern")
 
-const generate = require("./generate.js")
+const Employee = require("./lib/employee")
+
+const Engineer = require("./lib/engineer")
+const Manager = require("./lib/manager")
+const Intern = require("./lib/intern")
+
+const generate = require("./generateHTML.js")
 
 let something;
 //main questions
@@ -51,7 +53,7 @@ const empObj = {
 const enginQuestion = [
     {
         type: "input",
-        name: "github",
+        name: "gitName",
         message: "Please provide the github username of the given Engineer:",
     }
 ]
@@ -67,7 +69,7 @@ const internQuestion = [
 const managerQuestion = [
     {
         type: "input",
-        name: "officeNum",
+        name: "officeNumber",
         message: "Please provide the Office Number of given Manager:",
     }
 ]
@@ -75,54 +77,71 @@ const managerQuestion = [
 function ask() {
     inquirer.prompt(questions).then(answers => {
         
-        something = answers;
+        // something = answers;
 
         if (answers.role === "Manager") {
-            inquirer.prompt(managerQuestion).then(answers => {
-                something.officeNum = answers.officeNum;
-                empObj.Manager.push(something)
+            inquirer.prompt(managerQuestion).then(answer => {
+                let newManager = new Manager(answers.name, answers.id, answers.email, answer.officeNumber)
+                // something.officeNum = answers.officeNum;
+                empObj.Manager.push(newManager)
+                console.log("Thanks!")
                 console.log(empObj)
+                moreAsk();
             })
         } else if (answers.role === "Engineer") {
-            inquirer.prompt(enginQuestion).then(answers => {
-                something.github = answers.github;
-                empObj.Engineer.push(something)
+            inquirer.prompt(enginQuestion).then(answer => {
+                let newEngineer = new Engineer(answers.name, answers.id, answers.email, answer.gitName)
+                // something.github = answers.github;
+                empObj.Engineer.push(newEngineer)
+                console.log("Thanks!")
                 console.log(empObj)
-        
+                moreAsk();
             })
         } else if (answers.role === "Intern") {
-            inquirer.prompt(internQuestion).then(answers => {
-                something.school = answers.school;
-                empObj.Intern.push(something)
+            inquirer.prompt(internQuestion).then(answer => {
+                let newIntern = new Intern(answers.name, answers.id, answers.email, answer.school)
+                // something.school = answers.school;
+                empObj.Intern.push(newIntern)
+                console.log("Thanks!")
                 console.log(empObj)
+                moreAsk();
             })
         }
-
     });//end first prompt
-    // moreAsk();
 }//end of function
 
 function moreAsk() {
     inquirer.prompt(maybeQuestion).then(answer => {
-
-        let x = generate(empObj);
         if (answer.maybe === true) {
             ask();
         } else {
-            fs.writeFile('mainer.html', x, function (err) {
-                if (err) throw err;
-                console.log('Successfully created!');
-            });
+            makeHtml();
         }
     });//end second prompt
-    console.log(empObj)
 }
 
-// let x = generate(empObj);
-// fs.writeFile('mainer.html', x, function (err) {
-//     if (err) throw err;
-//     console.log('Successfully created!');
-//   });
+function makeHtml(){
+    
+    let page = generate.mainBody();
+    
+    while(empObj.Manager.length != 0){
+        let x = empObj.Manager.pop();
+        page += generate.managerCard(x);
+        console.log(x.name, x.id, x.email, x.officeNumber, x.role)
+    }
+    while(empObj.Engineer.length !=0){
+        page += generate.enginCard(empObj.Engineer.pop())
+    }
+    while(empObj.Intern.pop.length != 0){
+        page += generate.internCard(empObj.Intern.pop())
+    }
+    page += generate.foot();
+
+    fs.writeFile('team.html', page, function (err) {
+        if (err) throw err;
+        console.log('Successfully created!');
+    });
+ }
 
 ask();
 
