@@ -10,7 +10,6 @@ const Intern = require("./lib/intern")
 
 const generate = require("./generateHTML.js")
 
-let something;
 //main questions
 const questions = [
     {

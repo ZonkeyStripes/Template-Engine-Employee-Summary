@@ -87,8 +87,8 @@ let test = `
                             Manager</p>
                         </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">ID: ${data.id}</li>
-                  <li class="list-group-item">Email: ${data.email}</li>
+                  <li class="list-group-item">ID: ${data.id}#</li>
+                  <li class="list-group-item">Email: <a href="">${data.email}</a></li>
                   <li class="list-group-item">Office ID: ${data.officeNumber}</li>
                         </ul>
                       </div>
@@ -106,9 +106,9 @@ function enginCard(data){
             Engineer</p>
             </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">ID: ${data.id} </li>
-      <li class="list-group-item">Email: ${data.email}</li>
-      <li class="list-group-item">GitHub: ${data.gitName}</li>
+      <li class="list-group-item">ID: ${data.id}# </li>
+      <li class="list-group-item">Email: <a href="">${data.email}</a></li>
+      <li class="list-group-item">Github: <a href="https://www.github.com/${data.gitName}/">${data.gitName}</a></li>
             </ul>
           </div>
     `
@@ -124,8 +124,8 @@ function internCard(data){
                   Intern</p>
             </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">ID: ${data.id} </li>
-      <li class="list-group-item">Email: ${data.email}</li>
+      <li class="list-group-item">ID: ${data.id}# </li>
+      <li class="list-group-item">Email: <a href="">${data.email}</a></li>
       <li class="list-group-item">School: ${data.school}</li>
             </ul>
           </div>
